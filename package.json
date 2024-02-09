@@ -1,0 +1,18 @@
+{
+  "name": "music-bot",
+  "version": "2.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/ZerioDev/Music-bot.git",
+  "author": "ZerioDev",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@discordjs/voice": "^0.16.1",
+    "discord-player": "6.6.7",
+    "discord.js": "14.14.1",
+    "ffmpeg-static": "^5.2.0",
+    "opusscript": "^0.1.1",
+    "youtube-dl-exec": "2.5.6",
+    "ytdl-core": "^4.11.5"
+  }
+}

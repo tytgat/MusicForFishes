@@ -1,0 +1,247 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["plugin:react/recommended", "airbnb"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": ["react", "@typescript-eslint", "react-hooks"],
+    "rules": {
+        "max-len": [
+            "error",
+            {
+                "code": 120,
+                "tabWidth": 4,
+                "ignoreUrls": true,
+                "ignoreTrailingComments": true,
+                "ignoreComments": true
+            }
+        ],
+
+        "quotes": ["error", "double"],
+        "brace-style": ["error", "1tbs", { "allowSingleLine": false }],
+        "eol-last": ["error", "never"],
+        "linebreak-style": ["error", "windows"],
+        "prefer-destructuring": "off",
+        "no-restricted-exports": "off", // To export default from intex files --> https://github.com/airbnb/javascript/issues/2500
+
+        "react/sort-comp": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/static-property-placement": "off",
+        "react/jsx-max-props-per-line": ["error", { "maximum": 1 }],
+        "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
+        "react/jsx-curly-newline": "error",
+        "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": false }],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/function-component-definition": [
+            2,
+            {
+                "namedComponents": "arrow-function",
+                "unnamedComponents": "arrow-function"
+            }
+        ],
+        "react/jsx-no-useless-fragment": "off",
+        "react/no-unstable-nested-components": ["error", { "allowAsProps": true }],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }], // Error in default config, but add exception for for loops
+
+        "react/destructuring-assignment": "off",
+        "react/button-has-type": "off", // Warning on <button> missing attribute type
+        "no-console": "off", // all Console. should be disable during production compile
+
+        "jsx-a11y/anchor-is-valid": "off", // Warning on bad href in <a>
+        "jsx-a11y/no-static-element-interactions": ["off"], // Need a role on non interactive element that have a onClick
+        "jsx-a11y/click-events-have-key-events": "off", // Warning when non interactible element have onClick bu no keyboard action
+        "jsx-a11y/no-noninteractive-element-interactions": "off", // Element that does not implement interactive actions
+        "jsx-a11y/label-has-associated-control": "off", // Label should not have a control
+
+        // Fix useless import warning
+        "import/extensions": "off",
+        "react/jsx-filename-extension": [
+            "warn",
+            {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        ],
+        "import/prefer-default-export": "off",
+
+        // Static exceptions for react native  methods
+        "class-methods-use-this": [
+            "error",
+            {
+                "exceptMethods": [
+                    "render",
+                    "getInitialState",
+                    "getDefaultProps",
+                    "getChildContext",
+                    "componentWillMount",
+                    "componentDidMount",
+                    "componentWillReceiveProps",
+                    "shouldComponentUpdate",
+                    "componentWillUpdate",
+                    "componentDidUpdate",
+                    "componentWillUnmount"
+                ]
+            }
+        ],
+
+        "react/prop-types": "off", // Since we do not use prop-types
+        "react/require-default-props": "off", // Since we do not use prop-types
+
+        "sort-imports": [
+            "error", {
+                "ignoreCase": true,
+                "ignoreMemberSort": true,
+                "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+                "allowSeparatedGroups": false,
+                "ignoreDeclarationSort": true
+            }
+        ],
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index",
+                    "object",
+                    "type"
+                ],
+                "pathGroups": [
+                    {
+                        "pattern": "react",
+                        "group": "builtin"
+                    },
+                    {
+                        "pattern": "@baseComponents/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@model/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@utils/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@actions/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@constants/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@pages/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@reducer/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@middlewares/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@store/**",
+                        "group": "internal"
+                    },
+                    {
+                        "pattern": "@scss/**",
+                        "group": "internal"
+                    }
+                ],
+                "pathGroupsExcludedImportTypes": ["internal"],
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                }
+            }
+        ],
+
+        "@typescript-eslint/type-annotation-spacing": [
+            "error",
+            {
+                "before": true,
+                "after": true,
+                "overrides": {
+                    "colon": {
+                        "before": false,
+                        "after": true
+                    }
+                }
+            }
+        ],
+
+        "@typescript-eslint/no-use-before-define": ["error"],
+        //Only use typescript error for no-unused-vars
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "error",
+        //Only use typescript error for no-shadow
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "error",
+
+        //Force delimiters in typescript interfaces
+        "@typescript-eslint/member-delimiter-style": [
+            "error",
+            {
+                "multiline": {
+                    "delimiter": "comma",
+                    "requireLast": true
+                },
+                "singleline": {
+                    "delimiter": "comma",
+                    "requireLast": false
+                }
+            }
+        ],
+        //Enforce semi for interface and type for typescript
+        "@typescript-eslint/semi": "error",
+
+        //Set indent to 4 spaces
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4]
+    },
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "rules": {
+                "constructor-super": "off", // ts(2335) & ts(2377)
+                "getter-return": "off", // ts(2378)
+                "no-const-assign": "off", // ts(2588)
+                "no-dupe-args": "off", // ts(2300)
+                "no-dupe-class-members": "off", // ts(2393) & ts(2300)
+                "no-dupe-keys": "off", // ts(1117)
+                "no-func-assign": "off", // ts(2539)
+                "no-import-assign": "off", // ts(2539) & ts(2540)
+                "no-new-symbol": "off", // ts(2588)
+                "no-obj-calls": "off", // ts(2349)
+                "no-redeclare": "off", // ts(2451)
+                "no-setter-return": "off", // ts(2408)
+                "no-this-before-super": "off", // ts(2376)
+                "no-undef": "off", // ts(2304)
+                "no-unreachable": "off", // ts(7027)
+                "no-unsafe-negation": "off", // ts(2365) & ts(2360) & ts(2358)
+                "prefer-const": "error", // ts provides better types with const
+                "prefer-rest-params": "error", // ts provides better types with rest args over arguments
+                "prefer-spread": "error", // ts transpiles spread to apply, so no need for manual apply
+                "valid-typeof": "off", // ts(2367)
+                "import/no-unresolved": "off", // Import check by ts
+                "no-use-before-define": "off" // Import check by ts
+            }
+        }
+    ]
+}
