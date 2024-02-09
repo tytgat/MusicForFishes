@@ -1,9 +1,9 @@
 {
-  "name": "music-bot",
-  "version": "2.0.1",
+  "name": "fish",
+  "version": "0.1",
   "main": "index.js",
-  "repository": "https://github.com/ZerioDev/Music-bot.git",
-  "author": "ZerioDev",
+  "repository": "https://github.com/tytgat/MusicForFishes.git",
+  "author": "Chardon",
   "license": "MIT",
   "type": "module",
   "dependencies": {
