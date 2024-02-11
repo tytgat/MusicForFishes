@@ -1,11 +1,14 @@
 {
   "name": "fish",
   "version": "0.1",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": "https://github.com/tytgat/MusicForFishes.git",
   "author": "Chardon",
   "license": "MIT",
   "type": "module",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
   "dependencies": {
     "@discordjs/voice": "^0.16.1",
     "discord-player": "6.6.7",
@@ -14,5 +17,8 @@
     "opusscript": "^0.1.1",
     "youtube-dl-exec": "2.5.6",
     "ytdl-core": "^4.11.5"
+  },
+  "scripts": {
+    "run": "npx tsc && ts-node .\\index.js"
   }
 }

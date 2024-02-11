@@ -1,6 +1,6 @@
-import {EmbedBuilder, SlashCommandBuilder} from "discord.js";
-import {createAudioPlayer, createAudioResource, joinVoiceChannel} from "@discordjs/voice";
-import ytdl from "ytdl-core";
+import {SlashCommandBuilder} from "discord.js";
+import {joinVoiceChannel} from "@discordjs/voice";
+import {playMusic} from "../../utilities/playMusic.js";
 
 //https://github.com/fent/node-ytdl-core/issues/994#issuecomment-906581288
 const play = {
@@ -11,8 +11,8 @@ const play = {
             option.setName('song')
                 .setDescription('Enter the YouTube URL or keywords to search for')
                 .setRequired(true)),
-    async execute(interaction) {
-        const song = interaction.options.getString('song');
+    async execute(interaction: any, player: any) {
+        const url = interaction.options.getString('song');
 
         // Check if the user is in a voice channel
         if (!interaction.member.voice.channel) {
@@ -29,33 +29,10 @@ const play = {
 
         // https://github.com/fent/node-ytdl-core/issues/902#issuecomment-1460991438
         try {
-            // Get video info and create an audio resource
-            const videoInfo = await ytdl.getInfo(song);
-            const stream = ytdl(song, {
-                filter: 'audioonly',
-                fmt: 'mp3',
-                highWaterMark: 1 << 30,
-                liveBuffer: 20000,
-                dlChunkSize: 4096,
-                bitrate: 128,
-                quality: 'lowestaudio'
-            });
-            const resource = createAudioResource(stream);
-
-            // Create an audio player and play the resource
-            const player = createAudioPlayer();
-            player.play(resource);
-
             // Subscribe the connection to the player
             connection.subscribe(player);
 
-            // Send a confirmation message
-            const embed = new EmbedBuilder()
-                .setColor("Green")
-                .setTitle('Now Playing')
-                .setDescription(`[${videoInfo.videoDetails.title}](${song})`)
-                .setThumbnail(videoInfo.videoDetails.thumbnails[0].url);
-            interaction.reply({embeds: [embed]});
+            playMusic(url, player, interaction)
         } catch (e) {
             console.log("ERROR::", e)
         }
