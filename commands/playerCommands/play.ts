@@ -33,14 +33,21 @@ const play = {
             }
             //If bot already playing, add return url to add it to the playlist by default
             if (player.state.status === AudioPlayerStatus.Playing || player.state.status === AudioPlayerStatus.Paused) {
-                const videoInfo = await ytdl.getInfo(url);
+                let videoInfo
+                try {
+                    videoInfo = await ytdl.getInfo(url);
+                } catch (e) {
+                    interaction.reply(makeMessage('Red', "An error occurred", {description: new Error(e).message}))
+                    return {action: ACTION.NONE}
+                }
+
                 interaction.reply(makeMessage(
                     "DarkBlue",
                     "Adding to playlist", {
                         description: `[${videoInfo.videoDetails.title}](${url})`,
                         thumbnail: videoInfo.videoDetails.thumbnails[0].url
                     }));
-                return {action:ACTION.ADDTOPLAYLIST,data:url}
+                return {action: ACTION.ADDTOPLAYLIST, data: url}
             }
 
         }
@@ -59,7 +66,7 @@ const play = {
             connection.subscribe(player);
             interaction.reply(makeMessage("Orange", "Connecting..."));
             playMusic(client, player, url, channelId)
-            return {action:ACTION.NONE}
+            return {action: ACTION.NONE}
         } catch (e) {
             console.log("ERROR::", e)
         }

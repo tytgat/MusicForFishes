@@ -20,8 +20,8 @@ async function getYTResource(url: string) {
         });
         const resource = createAudioResource(stream);
         return {videoInfo, resource};
-    } catch (error) {
-        return {error: new Error(error).message}
+    } catch (e) {
+        return {error: new Error(e).message}
     }
 }
 
@@ -30,8 +30,9 @@ export async function playMusic(client: Client, player: AudioPlayer, url: string
     // Get video info and create an audio resource
     const {videoInfo, resource, error} = await getYTResource(url);
     if (error) {
-        const message = makeMessage('Red', "An error occured", {description: error})
+        const message = makeMessage('Red', "An error occurred", {description: error})
         await sendMessageToChannel(client, channelId, message);
+        return;
     }
 
     // Send a confirmation message
