@@ -19,6 +19,7 @@
     "ytdl-core": "^4.11.5"
   },
   "scripts": {
-    "run": "npx tsc && ts-node .\\index.js"
+    "run": "npx tsc && ts-node .\\index.js",
+    "compileTs": "npx tsc"
   }
 }
