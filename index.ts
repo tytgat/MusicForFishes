@@ -1,4 +1,4 @@
-import { Client, Events, GatewayIntentBits, Interaction} from "discord.js";
+import {Client, Events, GatewayIntentBits, Interaction} from "discord.js";
 import {createAudioPlayer} from "@discordjs/voice";
 
 // @ts-ignore
@@ -6,14 +6,11 @@ import config from "./config/bot.js";
 // @ts-ignore
 import {loadCommands} from "./utilities/fileLoader.js";
 import {playMusic} from "./utilities/playMusic.js";
-
+import {ACTION, CommandReturnType} from "./utilities/commandsTypes.js";
 
 /**
  * TODO LIST
  * - /repeat
- * - /stop
- * - /skip
- *
  */
 
 async function main() {
@@ -57,9 +54,18 @@ async function main() {
         }
 
         try {
-            const url = await command.execute(interaction, client, player);
-            if (url) {
-                playlist.push({url: url, channelId: interaction.channelId})
+            const commandReturn: CommandReturnType = await command.execute(interaction, client, player);
+            if (!commandReturn) {
+                return;
+            }
+            if (commandReturn.action === ACTION.ADDTOPLAYLIST) {
+                // Adding url to playlist
+                playlist.push({url: commandReturn.data, channelId: interaction.channelId})
+            }
+            if (commandReturn.action === ACTION.STOP) {
+                // Emptying playlist
+                playlist.splice(0, playlist.length);
+                player.stop(true)
             }
         } catch (error) {
             console.error(error);

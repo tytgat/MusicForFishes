@@ -7,7 +7,6 @@ node_modules/
 /index.js
 /index.js.map
 /Launch.cmd
-/commands/PlayerCommands/play.js
-/commands/PlayerCommands/play.js.map
+/commands/playerCommands/play.js
+*.js.map
 /utilities/playMusic.js
-/utilities/playMusic.js.map

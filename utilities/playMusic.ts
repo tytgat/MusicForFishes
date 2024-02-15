@@ -1,7 +1,7 @@
 import ytdl from "ytdl-core";
 import {AudioPlayer, createAudioResource} from "@discordjs/voice";
-import {Channel, Client, TextChannel} from "discord.js";
-import {makeMessage} from "./message.js";
+import { Client} from "discord.js";
+import {makeMessage, sendMessageToChannel} from "./message.js";
 
 /**
  * Async function that get data from youtube
@@ -9,32 +9,38 @@ import {makeMessage} from "./message.js";
  * @return return info on the video and the stream of data to read it
  */
 async function getYTResource(url: string) {
-    const videoInfo = await ytdl.getInfo(url);
-    const stream = ytdl(url, {
-        filter: 'audioonly',
-        highWaterMark: 1 << 30,
-        liveBuffer: 20000,
-        dlChunkSize: 4096,
-        quality: 'lowestaudio'
-    });
-    const resource = createAudioResource(stream);
-    return {videoInfo, resource};
+    try {
+        const videoInfo = await ytdl.getInfo(url);
+        const stream = ytdl(url, {
+            filter: 'audioonly',
+            highWaterMark: 1 << 30,
+            liveBuffer: 20000,
+            dlChunkSize: 4096,
+            quality: 'lowestaudio'
+        });
+        const resource = createAudioResource(stream);
+        return {videoInfo, resource};
+    } catch (error) {
+        return {error: new Error(error).message}
+    }
 }
+
 
 export async function playMusic(client: Client, player: AudioPlayer, url: string, channelId: string) {
     // Get video info and create an audio resource
-    const {videoInfo, resource} = await getYTResource(url);
+    const {videoInfo, resource, error} = await getYTResource(url);
+    if (error) {
+        const message = makeMessage('Red', "An error occured", {description: error})
+        await sendMessageToChannel(client, channelId, message);
+    }
 
     // Send a confirmation message
     if (client && channelId) {
-        const channel: Channel = client.channels.cache.get(channelId + "")//.send("coucou")
-        if (channel.isTextBased()) {
-            const textChannel = channel as TextChannel
-            await textChannel.send(makeMessage("Green", "Now Playing", {
-                description: `[${videoInfo.videoDetails.title}](${url})`,
-                thumbnail: videoInfo.videoDetails.thumbnails[0].url
-            }))
-        }
+        let message = makeMessage("Green", "Now Playing", {
+            description: `[${videoInfo.videoDetails.title}](${url})`,
+            thumbnail: videoInfo.videoDetails.thumbnails[0].url
+        });
+        await sendMessageToChannel(client, channelId, message);
     }
 
     // Create an audio player and play the resource
