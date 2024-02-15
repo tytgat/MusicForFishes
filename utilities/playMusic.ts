@@ -1,6 +1,6 @@
 import ytdl from "ytdl-core";
 import {AudioPlayer, createAudioResource} from "@discordjs/voice";
-import {Channel, Client, EmbedBuilder, Snowflake, TextChannel} from "discord.js";
+import {Channel, Client, TextChannel} from "discord.js";
 import {makeMessage} from "./message.js";
 
 /**

@@ -1,4 +1,4 @@
-import {ChatInputCommandInteraction, Client, Events, GatewayIntentBits, Interaction} from "discord.js";
+import { Client, Events, GatewayIntentBits, Interaction} from "discord.js";
 import {createAudioPlayer} from "@discordjs/voice";
 
 // @ts-ignore
