@@ -11,6 +11,7 @@ import {ACTION, CommandReturnType} from "./utilities/commandsTypes.js";
 /**
  * TODO LIST
  * - /repeat
+ * - playlist manager :O
  */
 
 async function main() {
